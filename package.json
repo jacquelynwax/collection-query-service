@@ -1,0 +1,11 @@
+{
+  "name": "collection-query-service",
+  "version": "1.0.0",
+  "description": "a simple collection/query service using node.js, express.js, postgreSQL, and rabbitMQ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jacquelyn Wax",
+  "license": "ISC"
+}
