@@ -2,18 +2,18 @@
   "name": "collection-query-service",
   "version": "1.0.0",
   "description": "a simple collection/query service using node.js, express.js, postgreSQL, and rabbitMQ",
-  "main": "index.js",
+  "main": "query_server/index.js",
   "scripts": {
-    "build-client": "webpack",
-    "build-client-watch": "webpack -w",
-    "start": "node server",
-    "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
-    "start-server": "nodemon --inspect server -e html,js,scss --ignore public",
+    "start": "node query_server",
+    "start-dev": "NODE_ENV='development' npm run start-server",
+    "start-server": "nodemon --inspect query_server -e html,js,scss --ignore public",
+    "start-rabbit-server": "/usr/local/sbin/rabbitmq-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jacquelyn Wax",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.5.2",
     "body-parser": "^1.18.2",
     "compress": "^0.99.0",
     "compression": "^1.7.2",
@@ -24,6 +24,7 @@
     "sequelize": "^4.37.1"
   },
   "devDependencies": {
+    "cluster": "^0.7.7",
     "nodemon": "^1.17.2",
     "webpack": "^4.1.1"
   }
