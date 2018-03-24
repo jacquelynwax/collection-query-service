@@ -1,24 +1,28 @@
 const router = require('express').Router();
 const { Message } = require('../../db/models');
+const { stats} = require('../utils');
 
 module.exports = router;
 
-// get chosen stat for a chosen responseType for a chosen time period
+// get chosen stat for a chosen responseType for a chosen date and time
 router.get('/:response_type/:stat/:date/:hour', (req, res, next) => {
-  // find all messages of the fiven response type and within the given data and hour
-  // return to the promise chain and then implement class method based on given stat
   Message.findAll({
     where: {
-      // fill in date info once I look at Postico
-      responseType: req.params.repsonse_type
+      responseType: req.params.response_type,
+      date: req.params.date,
+      hour: req.params.hour
     }
   })
   .then(messages => {
-    let method = req.params.stat;
-    return Message.method(messages);
+    if (messages.length) {
+      let method = req.params.stat;
+      return stats[method](messages);
+    } else {
+      return null;
+    }
   })
-  .then(messages => {
-    res.json(messages);
+  .then(stat => {
+    stat !== null ? res.json(stat) : res.json('No messages found for the requested date and time.');
   })
   .catch(next);
 })

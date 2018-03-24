@@ -1,4 +1,8 @@
-// this module schedules tasks to our work queue
+/*
+*
+This module schedules tasks to our work queue.
+*
+*/
 
 // require library
 const amqp = require('amqplib/callback_api');
@@ -9,9 +13,15 @@ amqp.connect('amqp://localhost', (err, conn) => {
   conn.createChannel((err, ch) => {
     // declare a queue; this process is idempotent - the queue will only be created if it doesn't exist already.
     let q = 'task_queue';
-    let msg = [{
+    let timeStamp = new Date();
+    let date = timeStamp.getMonth() + 1 + '-' + timeStamp.getDate() + '-' + timeStamp.getFullYear();
+    let hour = timeStamp.getHours();
+
+    let msg = [{ // this dummy message represents how we would parse incoming message data from clients
       responseType: 'something',
-      responseTime: 15
+      responseTime: 10,
+      date,
+      hour
     }];
 
     ch.assertQueue(q, { durable: true });

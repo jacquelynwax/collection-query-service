@@ -6,7 +6,7 @@ This module instantiates a worker process that 1) pops messages from the queue v
 
 const amqp = require('amqplib/callback_api'); // require the amqp library
 
-const { Message } = require('../../db/models'); // require our Message model
+const { Message } = require('../db/models'); // require our Message model
 
 amqp.connect('amqp://localhost', (err, conn) => { // open connection to RabbitMQ server
   conn.createChannel((err, ch) => { // create a channel
@@ -24,8 +24,11 @@ amqp.connect('amqp://localhost', (err, conn) => { // open connection to RabbitMQ
 
       let responseType = parsedMsg.responseType;
       let responseTime = parsedMsg.responseTime;
-      console.log(responseType, responseTime);
-      writeToDB(responseType, responseTime);
+      let date = parsedMsg.date;
+      let hour = parsedMsg.hour;
+
+      console.log(responseType, responseTime, date, hour);
+      writeToDB(responseType, responseTime, date, hour);
 
       setTimeout(function() {
         console.log(" [x] Done");
@@ -35,6 +38,6 @@ amqp.connect('amqp://localhost', (err, conn) => { // open connection to RabbitMQ
   });
 });
 
-const writeToDB = (responseType, responseTime) => {
-  return Message.create({ responseType, responseTime });
+const writeToDB = (responseType, responseTime, date, hour) => {
+  return Message.create({ responseType, responseTime, date, hour });
 };

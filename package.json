@@ -5,9 +5,9 @@
   "main": "query_server/index.js",
   "scripts": {
     "start": "node query_server",
-    "start-dev": "NODE_ENV='development' npm run start-server",
-    "start-server": "nodemon --inspect query_server -e html,js,scss --ignore public",
-    "start-rabbit-server": "/usr/local/sbin/rabbitmq-server",
+    "start-dev": "NODE_ENV='development' npm run start-query-server",
+    "start-query-server": "nodemon --inspect query_server -e html,js,scss --ignore public",
+    "start-collection-server": "/usr/local/sbin/rabbitmq-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jacquelyn Wax",

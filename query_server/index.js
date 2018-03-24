@@ -29,15 +29,9 @@ const createApp = () => {
   // static file serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')));
 
-  // send index html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'));
-  })
-
   // error handling middleware
   app.use((req, res, next, err) => {
     console.log(err);
-    console.log(err.stack);
     res.status(err.status || 500).send(err.message || 'Internal service error.');
   })
 }
@@ -48,7 +42,7 @@ const startListening = () => {
 
 const syncDb = () => {
   console.log('Syncing the database');
-  db.sync({ force: true });
+  db.sync({ force: false });
 }
 
 if (cluster.isMaster) {
@@ -64,7 +58,7 @@ if (cluster.isMaster) {
   createApp();
   startListening();
   syncDb();
-}
+};
 
 
 
